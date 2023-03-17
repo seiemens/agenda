@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-Person = require('./models/person');
+User = require('./models/user');
 require('dotenv/config');
 
 app.use(bodyParser.json());
@@ -15,16 +15,24 @@ mongoose.connect("mongodb://localhost:27017/mydb",
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
 
-const myData = new Person({ name: 'John', age: 30, email: 'john@example.com' });
-
-myData.save()
-.then(() => console.log('Data saved to MongoDB!'))
-.catch(err => console.error('Error saving data to MongoDB:', err));
-
 app.post('/api/login', (req, res) => {
     const requestData = req.body;
+    
     console.log(requestData); 
     const responseData = { message: 'Request received!' };
+    res.json(responseData);
+});
+
+app.post('/api/register', (req, res) => {
+    
+    const requestData = req.body;
+    console.log(req.body)
+    const newUser = new User({username: req.body.username, email: req.body.email, password: req.body.password})
+    
+    newUser.save()
+    .then(() => console.log('Data saved to MongoDB!'))
+    .catch(err => console.error('Error saving data to MongoDB:', err));
+    const responseData = { message: 'Created User' };
     res.json(responseData);
 });
 
