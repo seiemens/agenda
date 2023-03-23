@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()">
+    <label for="title">Titel:</label>
+    <input type="text" id="title" [(ngModel)]="title" name="title" required>
+  
+    <label for="description">Beschreibung:</label>
+    <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
+  
+    <label for="start">Startzeit:</label>
+    <input type="datetime-local" id="start" [(ngModel)]="start" name="start" required>
+  
+    <label for="end">Endzeit:</label>
+    <input type="datetime-local" id="end" [(ngModel)]="end" name="end" required>
+  
+    <button type="submit">Submit</button>
+  </form>

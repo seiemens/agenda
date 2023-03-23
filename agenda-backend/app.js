@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 User = require('./models/user');
+Meeting = require('./models/meeting');
 require('dotenv/config');
 
 app.use(bodyParser.json());
@@ -14,14 +15,28 @@ mongoose.connect("mongodb://localhost:27017/mydb",
     .then(() => console.log('Connected to MongoDB!'))
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
-
 app.post('/api/login', (req, res) => {
     const requestData = req.body;
     
     console.log(requestData); 
-    const responseData = { message: 'Request received!' };
-    res.json(responseData);
-});
+    User.findOne({ username: req.body.username, password: req.body.password }) 
+        .then((user) => {
+        if (!user) {
+          // User not found
+          res.status(404).send();
+          console.log('User not found');
+        } else {
+          // User found
+          res.json(user);
+          console.log('User found:', user);
+          // Redirect to the dashboard or perform any other action
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // Handle the error
+      })
+    });
 
 app.post('/api/register', (req, res) => {
     

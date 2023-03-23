@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { tap } from 'rxjs';
-import { User } from 'src/app/models/user.model';
+import { UserRegister } from 'src/app/models/userRegister.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class RegistrationComponent {
   onSubmit() {
    
     if(this.email && this.username && this.password){
-      var user: User = {username: this.username, email: this.email, password: this.password};
+      var user: UserRegister = {username: this.username, email: this.email, password: this.password};
       this.userService.registerUser(user).subscribe();
       console.log("did req");
     }

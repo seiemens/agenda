@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
+import { UserLogin } from 'src/app/models/userLogin.model';
+import { catchError, tap } from 'rxjs';
 
 
 @Component({
@@ -11,23 +14,30 @@ import { HttpClient } from '@angular/common/http';
 
 
 export class LoginComponent {
-  email: string | undefined;
-  password: string | undefined;
+  public userlogin = new UserLogin();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private userService: UserService
+  ){}
 
-  onSubmit() {
-    const formData = {
-      email: this.email,
-      password: this.password
-    };
+  public login(): void {
+    if(this.userlogin.password !== '' && this.userlogin.username !== ''){
 
-    this.http.post("http://localhost:3000/" + 'api/login', formData).subscribe((response) => {
-      console.log('API response:', response);
-      // TODO: handle successful response from the backend
-    }, (error) => {
-      console.error('API error:', error);
-      // TODO: handle error response from the backend
-    });
+      this.userService.loginUser(this.userlogin).pipe(
+        tap((res) =>{
+          console.log(res)
+          sessionStorage.setItem("username", res.username)
+          window.location.href = '/home'
+        }),
+        catchError((err) =>{
+
+          return err;
+        })
+      ).subscribe();
+
+    }
+
+    
+
   }
 }
