@@ -10,15 +10,15 @@ require('dotenv/config');
 app.use(bodyParser.json());
 app.use(cors());
 
+//connect to mongodb via url
 mongoose.connect("mongodb://localhost:27017/mydb",
 	{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB!'))
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
+//check if user exists in db
 app.post('/api/login', (req, res) => {
     const requestData = req.body;
-    
-    console.log(requestData); 
     User.findOne({ username: req.body.username, password: req.body.password }) 
         .then((user) => {
         if (!user) {
@@ -29,28 +29,34 @@ app.post('/api/login', (req, res) => {
           // User found
           res.json(user);
           console.log('User found:', user);
-          // Redirect to the dashboard or perform any other action
         }
       })
       .catch((err) => {
         console.log(err);
-        // Handle the error
       })
     });
 
 app.post('/api/register', (req, res) => {
-    
-    const requestData = req.body;
-    console.log(req.body)
+
+    //create new user with mongoose schema
     const newUser = new User({username: req.body.username, email: req.body.email, password: req.body.password})
     
+    //save user to db
     newUser.save()
     .then(() => console.log('Data saved to MongoDB!'))
     .catch(err => console.error('Error saving data to MongoDB:', err));
+
+    //send response
     const responseData = { message: 'Created User' };
     res.json(responseData);
 });
 
+app.post('/api/meeting', (req, res) => {
+const meeting = new Meeting({title: req.body.title, description: req.body.description, startTime: req.body.startDate, endTime: req.body.endDate})
+meeting.save()
+});
+
+//start webserver
 var port = process.env.PORT || '3000'
 app.listen(port, err => {
 	if (err)

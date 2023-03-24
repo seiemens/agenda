@@ -18,13 +18,10 @@ export class RegistrationComponent {
   ){}
 
   onSubmit() {
-   
     if(this.email && this.username && this.password){
       var user: UserRegister = {username: this.username, email: this.email, password: this.password};
       this.userService.registerUser(user).subscribe();
       console.log("did req");
     }
-  
-    // Here you can send the form data to the server using HTTP requests
-  }
+    }
 }

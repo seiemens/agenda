@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/services/user.service';
 import { UserLogin } from 'src/app/models/userLogin.model';
 import { catchError, tap } from 'rxjs';
@@ -36,8 +35,6 @@ export class LoginComponent {
       ).subscribe();
 
     }
-
-    
 
   }
 }

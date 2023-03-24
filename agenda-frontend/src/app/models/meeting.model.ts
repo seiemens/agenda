@@ -1,5 +1,8 @@
 import { ObjectId } from "mongoose";
 
 export class Meeting {
-public _id: ObjectId | undefined;
+public title: string = "";
+public description: string = "";
+public startDate : Date | undefined;
+public endDate : Date | undefined;
 }

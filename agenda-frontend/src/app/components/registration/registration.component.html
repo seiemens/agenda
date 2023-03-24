@@ -1,6 +1,6 @@
-<h1>Registration Form</h1>
+<form class="registration-form" (ngSubmit)="onSubmit()">
+  <h1>Registration Form</h1>
 
-<form (ngSubmit)="onSubmit()">
   <div>
     <label for="email">Email</label>
     <input type="email" name="email" [(ngModel)]="email">

@@ -4,6 +4,7 @@ import { UserRegister } from '../models/userRegister.model';
 
 import { Observable } from 'rxjs';
 import { UserLogin } from '../models/userLogin.model';
+import { Meeting } from '../models/meeting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,16 @@ export class UserService {
 
   registerUser(userSignUp: UserRegister): Observable<any> {
     const url = this.baseurl + 'register';
-    console.log(url)
     return this.http.post<UserRegister>(url, userSignUp);
   }
   
   loginUser(userLogin: UserLogin): Observable<any> {
     const url = this.baseurl + 'login';
-    console.log(url)
     return this.http.post<UserLogin>(url, userLogin);
+  }
+
+  createMeeting(meeting: Meeting): Observable<any> {
+    const url = this.baseurl + 'meeting';
+    return this.http.post<UserLogin>(url, meeting);
   }
 }
